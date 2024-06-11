@@ -1,11 +1,10 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import Register from "./register/page";
-
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Dictionary from "./dictionary/page";
 
 export default function Home() {
   return (
-    <Register />
+    <Dictionary />
   );
 }

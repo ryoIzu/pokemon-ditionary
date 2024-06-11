@@ -1,0 +1,81 @@
+.OffCanvas {
+  z-index: 6;
+}
+.main {
+  position: fixed;
+  z-index: 5;
+  width: 100%;
+}
+#me-auto {
+  width: 100%;
+  display: flex;
+}
+#signInBtn {
+  margin: 0 0 0 auto;
+}
+
+.left {
+  justify-content: start;
+  align-content: start;
+  margin-right: 0px;
+}
+
+.right {
+  justify-content: end;
+  align-content: end;
+}
+
+.ms-auto {
+  display: flex;
+  align-items:first baseline;
+}
+
+.message {
+  position: relative;
+}
+.message span.remark {
+  display: none;
+}
+.message .signOut:hover span.remark {
+  background: none repeat scroll 0 0 #e7e7e7;
+  color: #5c5c5c;
+  border-radius: 5px;
+  display: block;
+  line-height: 1.2em;
+  margin: 0px;
+  padding: 0.3em;
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  width: 100px;
+  text-align: center;
+}
+.message .signIn:hover span.remark {
+  background: none repeat scroll 0 0 #e7e7e7;
+  color: #5c5c5c;
+  border-radius: 5px;
+  display: block;
+  line-height: 1.2em;
+  margin: 0px;
+  padding: 0.3em;
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  width: 100px;
+  text-align: center;
+}
+
+.navContent {
+  text-decoration: none;
+  color: #5c5c5c;
+  transition: all 0.2s;
+}
+
+.navContent:hover {
+  color: #00ffae;
+}
+
+.icon {
+  margin-right: 10px;
+  transition: all 0.2s;
+}
