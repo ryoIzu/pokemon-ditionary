@@ -4,6 +4,8 @@ import './dictionary.css';
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 import {useState, useEffect, useContext} from 'react';
 import { PokemonContext } from '../context/pokemonContext';
+import Link from 'next/link';
+import { PokemonCard } from '../components/PokemonCard';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -11,17 +13,26 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Pagination from 'react-bootstrap/Pagination';
 
-
 export default function Dictionary() {
-  const {pokemons, isLoading} = useContext(PokemonContext);
-  const [activePage, setActivePage] = useState(1);
-  const [active, setActive] = useState([false,false,false,false,false,false,false,false,false,false,false,false,false,])
+  const {pokemons, isLoading,targetPokemon,handleChangeTarget} = useContext(PokemonContext);
+  const [activePage, setActivePage] = useState(0);
+  const [hoveredImg, setHoveredImg] = useState('');
+  const cardItems = Array(12).fill(0);
+
 
   const handleActivePage = (num)=> {
-    if(num < 146 && num >0)  {
+    if(num < 146 && num >=0)  {
       setActivePage(num);
+      setHoveredImg('');
     }
   };
+
+  const handleMouseOver = (num)=> () => {
+    setHoveredImg('100%')
+  }
+  const handleMouseOut = () => {
+    setHoveredImg('');
+  }
 
 
 
@@ -41,119 +52,71 @@ export default function Dictionary() {
       ):(
         <>
         <Container fluid>
-        <Row padding='10px'>
-          <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage-1].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage-1].pokemon.image_s}/>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage].pokemon.image_s}/>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage+1].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage+1].pokemon.image_s}/>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage+2].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage+2].pokemon.image_s}/>
-            </Card>
-          </Col>
+        <Row style={{padding:'10px'}}>
+          {cardItems.map((cardItem, index) => (
+            index < 4 && activePage+index < 151 &&
+              
+                <PokemonCard 
+                  name={pokemons[activePage+index].pokemon.name}
+                  activePage= {activePage+index}
+                  image = {pokemons[activePage+index].pokemon.image_s} />
+          ))}
         </Row>
-
-        <Row style={{paddingTop:'10px'}}>
-          <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage+3].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage+3].pokemon.image_s}/>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage+4].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage+4].pokemon.image_s}/>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage+5].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage+5].pokemon.image_s}/>
-            </Card>
-          </Col>
-          {(activePage < 145) ? (
-            <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage+6].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage+6].pokemon.image_s}/>
-            </Card>
-          </Col>
-          ):(
-            <></>
-          ) 
-            
-          }
-          
+        <Row style={{padding:'10px'}}>
+          {cardItems.map((cardItem, index) => (
+            index > 3 && index < 8 && activePage+index < 151 &&
+              
+                <PokemonCard 
+                  name={pokemons[activePage+index].pokemon.name}
+                  activePage= {activePage+index}
+                  image = {pokemons[activePage+index].pokemon.image_s} />
+          ))}
         </Row>
-        {(activePage < 145) ? (
-          <Row style={{paddingTop:'10px'}}>
-          <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage+7].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage+7].pokemon.image_s}/>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage+8].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage+8].pokemon.image_s}/>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage+9].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage+9].pokemon.image_s}/>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{width: '100%' ,height: '400px', padding: '10px'}} border="sencondary" bg='light' >
-            <Card.Title className='mb-2 text-muted' style={{padding: '5px'}}>{pokemons[activePage+10].pokemon.name}</Card.Title>
-              <Card.Img className='card-img-top' variant='top' src={pokemons[activePage+10].pokemon.image_s}/>
-            </Card>
-          </Col>
+        <Row style={{padding:'10px'}}>
+          {cardItems.map((cardItem, index) => (
+            index > 7 && index < 12 && activePage+index < 151 &&
+                <PokemonCard 
+                  name={pokemons[activePage+index].pokemon.name}
+                  activePage= {activePage+index}
+                  image = {pokemons[activePage+index].pokemon.image_s} />
+          ))}
         </Row>
-        ):(
-          <>
-          </>
-        )}
-      </Container>
+        <Row style={{padding:'10px'}}>
+          {cardItems.map((cardItem, index) => (
+            index > 11 && activePage+index < 151 &&
+              
+                <PokemonCard 
+                  name={pokemons[activePage+index].pokemon.name}
+                  activePage= {activePage+index}
+                  image = {pokemons[activePage+index].pokemon.image_s} />
+          ))}
+        </Row>     
+        </Container>
+      
+      
       <div className='d-flex justify-content-center my-3'>
         <Pagination>
-          <Pagination.First active={activePage === 1} onClick={() => {handleActivePage(1)}}/>
+          <Pagination.First onClick={() => {handleActivePage(0)}}/>
           <Pagination.Prev onClick={() => {handleActivePage(activePage-12)}}/>
-          <Pagination.Item active={activePage === 1} onClick={() => {handleActivePage(1)}}>{1}</Pagination.Item>
-          <Pagination.Item active={activePage === 13} onClick={() => {handleActivePage(13)}} >{2}</Pagination.Item>
-          <Pagination.Item active={activePage === 25} onClick={() => {handleActivePage(25)}} >{3}</Pagination.Item>
-          <Pagination.Item active={activePage === 37} onClick={() => {handleActivePage(37)}} >{4}</Pagination.Item>
-          <Pagination.Item active={activePage === 49} onClick={() => {handleActivePage(49)}}>{5}</Pagination.Item>
-          <Pagination.Item active={activePage === 61} onClick={() => {handleActivePage(61)}}>{6}</Pagination.Item>
-          <Pagination.Item active={activePage === 73} onClick={() => {handleActivePage(73)}}>{7}</Pagination.Item>
-          <Pagination.Item active={activePage === 85} onClick={() => {handleActivePage(85)}}>{8}</Pagination.Item>
-          <Pagination.Item active={activePage === 97} onClick={() => {handleActivePage(97)}}>{9}</Pagination.Item>
-          <Pagination.Item active={activePage === 109} onClick={() => {handleActivePage(109)}}>{10}</Pagination.Item>
-          <Pagination.Item active={activePage === 121} onClick={() => {handleActivePage(121)}}>{11}</Pagination.Item>
-          <Pagination.Item active={activePage === 133} onClick={() => {handleActivePage(133)}}>{12}</Pagination.Item>
-          <Pagination.Item active={activePage === 145} onClick={() => {handleActivePage(145)}}>{13}</Pagination.Item>
+          <Pagination.Item active={activePage === 0} onClick={() => {handleActivePage(0)}}>{1}</Pagination.Item>
+          <Pagination.Item active={activePage === 12} onClick={() => {handleActivePage(12)}} >{2}</Pagination.Item>
+          <Pagination.Item active={activePage === 24} onClick={() => {handleActivePage(24)}} >{3}</Pagination.Item>
+          <Pagination.Item active={activePage === 36} onClick={() => {handleActivePage(36)}} >{4}</Pagination.Item>
+          <Pagination.Item active={activePage === 48} onClick={() => {handleActivePage(48)}}>{5}</Pagination.Item>
+          <Pagination.Item active={activePage === 60} onClick={() => {handleActivePage(60)}}>{6}</Pagination.Item>
+          <Pagination.Item active={activePage === 72} onClick={() => {handleActivePage(72)}}>{7}</Pagination.Item>
+          <Pagination.Item active={activePage === 84} onClick={() => {handleActivePage(84)}}>{8}</Pagination.Item>
+          <Pagination.Item active={activePage === 96} onClick={() => {handleActivePage(96)}}>{9}</Pagination.Item>
+          <Pagination.Item active={activePage === 108} onClick={() => {handleActivePage(108)}}>{10}</Pagination.Item>
+          <Pagination.Item active={activePage === 120} onClick={() => {handleActivePage(120)}}>{11}</Pagination.Item>
+          <Pagination.Item active={activePage === 132} onClick={() => {handleActivePage(132)}}>{12}</Pagination.Item>
+          <Pagination.Item active={activePage === 144} onClick={() => {handleActivePage(144)}}>{13}</Pagination.Item>
           <Pagination.Next onClick={() => {handleActivePage(activePage+12)}}/>
-          <Pagination.Last active={activePage === 145} onClick={() => {handleActivePage(145)}}/>
+          <Pagination.Last onClick={() => {handleActivePage(144)}}/>
         </Pagination>
       </div>
+
+
       </>
       )}
     </div>

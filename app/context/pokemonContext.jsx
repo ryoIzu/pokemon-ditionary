@@ -15,15 +15,19 @@ export const PokemonContext = createContext(null);
 export const PokemonContextProvider = (props) => {
   const [pokemons, setPokemons] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [targetPokemon, setTargetPokemon] = useState(0);
   useEffect(()=>{
       setPokemons(Data);
       console.log(pokemons);
       setIsLoading(false);
   },[]);
 
+  const handleChangeTarget = (num) => {
+    setTargetPokemon(num);
+  };
+
   return(
-    <PokemonContext.Provider value={{pokemons, isLoading}}>
+    <PokemonContext.Provider value={{pokemons, isLoading,targetPokemon,handleChangeTarget}}>
       {props.children}
     </PokemonContext.Provider>
   );

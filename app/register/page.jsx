@@ -3,8 +3,9 @@
 import './register.css';
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 import {Col, Container, FormGroup, Input, Label, Row} from "reactstrap";
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import { useRouter } from 'next/navigation';
+import { PokemonContext } from '../context/pokemonContext';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -16,6 +17,9 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [errPassword,setErrPassword] = useState('');
   const [errEmail, setErrEmail] = useState('');
+
+  const {pokemons, isLoading,targetPokemon} = useContext(PokemonContext);
+  console.log(targetPokemon);
 
   const router = useRouter();
   //登録ボタンのハンドラー

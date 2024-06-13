@@ -2,3 +2,13 @@
   margin-top: 64px;
   padding: 10px ;
 }
+
+.card {
+  width: 100%;
+  height: 350px;
+  padding: 10px;
+}
+
+.pokemonCard {
+  transition: padding 1s ease;
+}

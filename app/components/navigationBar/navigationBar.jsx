@@ -79,7 +79,7 @@ function NavigationBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="./home">ホーム</Nav.Link>
+              <Nav.Link href="./dictionary">ホーム</Nav.Link>
               <NavDropdown title="メニュー" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">ポケモン図鑑</NavDropdown.Item>
                 <NavDropdown.Divider />
@@ -94,7 +94,7 @@ function NavigationBar() {
 
           <div className='ms-auto'>
               <div className='message'>
-                  <Nav.Link className='signIn' href='./signIn'>
+                  <Nav.Link className='signIn' href='./register'>
                     <LiaSignInAltSolid 
                       className='icon'
                       size={30}
