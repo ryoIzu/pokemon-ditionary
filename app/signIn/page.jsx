@@ -16,7 +16,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 
-import HorizontalLine from '../Components/HorizontalLine/HorizontalLine';
+import HorizontalLine from '../components/HorizontalLine/HorizontalLine';
 
 const Login = () => {
   const [email, setEmail] = useState('');
