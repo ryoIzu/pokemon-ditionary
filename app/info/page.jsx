@@ -13,6 +13,9 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 
+import { PiArrowFatLinesRightFill } from "react-icons/pi";
+import { PiArrowFatLinesLeftFill } from "react-icons/pi";
+
 
 export default function Info() {
   const {pokemons, isLoading,targetPokemon,handleChangeTarget} = useContext(PokemonContext);
@@ -38,7 +41,7 @@ export default function Info() {
         >
         <Row className='custom-row'>
           <Col xs={1} className='custom-col-btn'>
-            <Button variant='primary' onClick={handlePrev}>{'←'}</Button>
+            <PiArrowFatLinesLeftFill  size={30}variant='primary' onClick={handlePrev}/>
           </Col>
           <Col xs={3} className='custom-col'>
             <Image src={pokemons[targetPokemon].pokemon.image_s} />
@@ -67,7 +70,7 @@ export default function Info() {
             </Card>
           </Col>
           <Col xs={1} className='custom-col-btn'>
-            <Button variant='primary' onClick={handleNext}>{'→'}</Button>
+            <PiArrowFatLinesRightFill  size={30}variant='primary' onClick={handleNext} />
           </Col>
         </Row>
 

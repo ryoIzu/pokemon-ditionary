@@ -13,7 +13,7 @@ import Alert from 'react-bootstrap/Alert';
 
 
 export const Ability = (props) => {
-  const liItems = Array(10).fill(0);
+  const [liItems,setLiItems] = useState(new Array(10).fill('white'));
 
   return(
     <>
@@ -25,8 +25,7 @@ export const Ability = (props) => {
         {liItems.map((liItem,index) => (
           <li
             key={index}
-            style={{backgroundColor: index < props.abilityValue ?
-              `rgb(${230-40*index},${230-40*index},256)`: 'white',
+            style={{backgroundColor: index < props.abilityValue ? `rgb(${230 - 40 * index},${230 - 40 * index},256)` : 'white',
               transitionDelay: `${index*0.1}s`
             }}
           ></li>
