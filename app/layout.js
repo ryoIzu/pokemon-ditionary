@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/navigationBar/navigationBar';
 import {AuthProvider} from './context/authContext';
 import { PokemonContextProvider } from "./context/pokemonContext";
+import { Filter } from "./context/filter/filter";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,10 +18,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
             <body className={inter.className}>
-              <PokemonContextProvider>
-                <NavigationBar />
-                {children}
-              </PokemonContextProvider>  
+              <AuthProvider>
+                <PokemonContextProvider>
+                  <NavigationBar />
+                  {children}
+                </PokemonContextProvider>
+              </AuthProvider>  
             </body>
     </html>
   );

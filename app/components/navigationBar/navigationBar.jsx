@@ -9,7 +9,7 @@ import NavItem from 'react-bootstrap/NavItem';
 import NavLink from 'react-bootstrap/NavLink';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-//import { useAuth } from '../context/authContext';
+import { useAuth } from '../../context/authContext';
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { LiaSignInAltSolid } from "react-icons/lia";
 import { BsCart4 } from "react-icons/bs";
@@ -23,7 +23,7 @@ import { ListGroup } from 'reactstrap';
 
 
 function NavigationBar() {
-  //const  {currentUser} = useAuth();
+  const  {currentUser} = useAuth();
   const router = useRouter();
   const [mouseHover_cart, setMouseHover_cart] = useState(false);
   const [mouseHover_signIn, setMouseHover_signIn] = useState(false);
@@ -37,21 +37,19 @@ function NavigationBar() {
   const handleCloseCanvas = () => setShowOffCanvas(false);
   const handleShowCanvas = () => setShowOffCanvas(true);
 
-  /*
+  
   const handleSignOut = () => {
     const auth = getAuth();
-    
     signOut(auth)
     .then(() => {
       // ログアウトされたことをわかりやすくするためのアラート
       //alert( 'ログアウト完了！' );
-      router.push('/login');
+      router.push('/signIn');
     })
     .catch((error) => {
       console.log(error);
     });
   };
-  */
   
   return(
     <div className='main'>
@@ -93,17 +91,38 @@ function NavigationBar() {
 
 
           <div className='ms-auto'>
+          {currentUser ? (
+              <>
+              <p className='email'>Signing in as {currentUser.email}</p>
+                
+                <div className='message'>
+                  <Nav.Link className='signOut' onClick={() =>{handleSignOut();}}>
+                    <LiaSignOutAltSolid 
+                      className='icon'
+                      size={40}
+                      color={mouseHover_signOut ? 'rgb(0,255,174)' :'#ccc'}
+                      onMouseEnter={() => setMouseHover_signOut(true)}
+                      onMouseLeave={() => setMouseHover_signOut(false)}/>
+                    <span className='remark'>sign out</span>
+                  </Nav.Link>  
+                </div>
+              </>
+            ):(
+              <>
               <div className='message'>
-                  <Nav.Link className='signIn' href='./register'>
+                  <Nav.Link className='signIn' href='./signIn'>
                     <LiaSignInAltSolid 
                       className='icon'
-                      size={30}
+                      size={40}
                       color={mouseHover_signIn ? 'rgb(0,255,174)' :'#ccc'}
                       onMouseEnter={() => setMouseHover_signIn(true)}
                       onMouseLeave={() => setMouseHover_signIn(false)}/>
                     <span className='remark'>sign in</span>
                   </Nav.Link>  
               </div>
+                
+              </>
+            )}
             </div>
         </Container>
       </Navbar>
